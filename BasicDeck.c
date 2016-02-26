@@ -2,7 +2,7 @@
 #include <string.h>
 #define MAXLEN 80
 
-//Here's an idea, put player handles in a seperate array. Location in handle array correspond to hands in play array.
+//Here's an idea, put player handles in a seperate array. Location in handle array correspond to hands in play array. This works like a dreamfairy
 //Also, make player number changeable.
 int main ()
 
@@ -16,13 +16,26 @@ int main ()
   
   int x=0; 	//player
   int y=0;	//hand positions
-  int play[4][7];	//cards in play
-  char handles[4][80];
+  short unsigned int handnum;
+ 
+ 
+  printf("How many players?\n");
+  scanf("%d",&handnum);
+ // getchar();
+  int play[handnum][7];	//cards in play
+  char handles[handnum][80];
   
-  strcpy(handles[0], "Mikazuki");		//In future, user will be able to assign player names
-  strcpy(handles[1], "Orga");
-  strcpy(handles[2], "Kudelia");
-  strcpy(handles[3], "Naze");
+  for (i=0;i<handnum;++i)
+  {
+  	printf("Player %d, what is your handle?\t",i+1);
+  	fgets(handles[i],MAXLEN,stdin);
+  	getchar();
+  }
+
+  //strcpy(handles[0], "Mikazuki");		//In future, user will be able to assign player names
+  //strcpy(handles[1], "Orga");
+  //strcpy(handles[2], "Kudelia");
+  //strcpy(handles[3], "Naze");
 
 
   
@@ -38,7 +51,7 @@ int main ()
 
 
 
-  for(x=0; x<4; ++x)     //Now fills array play instead of simply printing. Plan to randomise in future.
+  for(x=0; x<handnum; ++x)     //Now fills array play instead of simply printing. Plan to randomise in future.
 
   {
 
