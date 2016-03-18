@@ -24,6 +24,7 @@ int drawcard(void)
 }
 /*
 	This function (right now hardcoded so it only works with playnum =4) displays hands for each player and allows player to select card to put into table array
+	you might need to make a different function for every permissible number of players, if you can't think of something clever.
 */
 int playball (int player, int p[4][7])
 {
@@ -42,8 +43,6 @@ int main (void)
   struct card deckmaster[52];
   
   int i;      //gen deck counter
-
-  int m=0;   //printdeck counter
   
   int x=0; 	//player
   int y=0;	//hand positions
@@ -51,9 +50,11 @@ int main (void)
   short unsigned int handnum;
   srand(time(NULL));	//initializes rand
  
-  printf("How many players?\n"); 
-  scanf("%d",&handnum);
-  getchar();
+ // printf("How many players?\n"); 
+ // scanf("%d",&handnum);
+//  getchar();
+ 
+  handnum = 4;		//Every game automatically 4 players for now.
   int table[handnum]; //cards played on table
   int play[handnum][7];	//cards in play
  
@@ -101,10 +102,11 @@ int main (void)
    {
    	play[x][y]= drawcard();
    	printf("%d ",deckmaster[play[x][y]].id);	//After I make cards, I'll have this print the name.
-   	++m;						//m is initalised at 0 at top of code
    }
 
     printf("\n");
   }
 
   return 0;
+
+}
