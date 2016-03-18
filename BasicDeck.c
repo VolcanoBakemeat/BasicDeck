@@ -92,15 +92,15 @@ int main (void)
 	}
 */
 
-	//fills player hands. Ooh, ooh, create a drawcard function
+	//fills player hands.
   for(x=0; x<handnum; ++x)     //Now fills array play instead of simply printing.
 
   {
 	printf("Player %d:\n",x+1);
    for(y=0; y<7; ++y)
    {
-   	play[x][y]= deckmaster[drawcard()].id;
-   	printf("%d ",play[x][y]);	//remember to change format char to reflect any new variables
+   	play[x][y]= drawcard();
+   	printf("%d ",deckmaster[play[x][y]].id);	//After I make cards, I'll have this print the name.
    	++m;						//m is initalised at 0 at top of code
    }
 
@@ -108,5 +108,3 @@ int main (void)
   }
 
   return 0;
-
-}
