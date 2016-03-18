@@ -6,6 +6,13 @@
 
 //Here's an idea, put player handles in a seperate array. Location in handle array correspond to hands in play array. This works like a dreamfairy
 //Also, make player number changeable. Scrapped for now.
+struct card
+{
+	char name[MAXLEN];
+	char description[MAXLEN];
+	int id;			//Numerical id. 
+	int taken;
+};
 /*
 	randomly chooses card.
 */
@@ -32,7 +39,7 @@ int playball (int player, int p[4][7])
 int main (void)
 {
 
-  int deckmaster[52];
+  struct card deckmaster[52];
   
   int i;      //gen deck counter
 
@@ -40,7 +47,7 @@ int main (void)
   
   int x=0; 	//player
   int y=0;	//hand positions
-  int r;
+
   short unsigned int handnum;
   srand(time(NULL));	//initializes rand
  
@@ -72,8 +79,8 @@ int main (void)
 
   {
 
-    deckmaster [i] = i+1;
-
+    deckmaster [i].id = i+1;
+	deckmaster [i].taken = 0;
   }
   
   
@@ -92,7 +99,7 @@ int main (void)
 	printf("Player %d:\n",x+1);
    for(y=0; y<7; ++y)
    {
-   	play[x][y]= deckmaster[drawcard()];
+   	play[x][y]= deckmaster[drawcard()].id;
    	printf("%d ",play[x][y]);	//remember to change format char to reflect any new variables
    	++m;						//m is initalised at 0 at top of code
    }
