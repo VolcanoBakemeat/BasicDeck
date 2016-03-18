@@ -12,7 +12,7 @@
 int drawcard(void)
 {
 	int r;
-    r= rand()/1000;
+    r= rand()/1000 % 52;	//Chooses only in the range of 0-51
     return r;
 }
 /*
