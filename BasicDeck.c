@@ -16,11 +16,9 @@ struct card
 /*
 	randomly chooses card.
 */
-int drawcard(void)
+int drawcard(void)		//why does this need to be its own function
 {
-	int r;
-    r= rand()/1000 % 52;	//Chooses only in the range of 0-51
-    return r;
+    return rand()/1000 % 52; 	//Chooses only in the range of 0-51. with this in a centralized place, I can change it on the fly
 }
 /*
 	This function (right now hardcoded so it only works with playnum =4) displays hands for each player and allows player to select card to put into table array
@@ -30,10 +28,17 @@ int playball (int player, int p[4][7])
 {
 	int k;
 	int l;
-	for(k=0;k<4;++k)
+	int chosen;
+
+	printf("Player %d cards: ",player+1);
+	for (l=1; l<=7; ++l)
 	{
-		printf("Player %d cards:",k+1);
+		printf("|%d. %d ",l, p[player][l-1]);
 	}
+	printf("\n Noble champion, what card do you wish to play?");
+	scanf("%d",&chosen);
+	return p[player][chosen];
+	
 }
 
 
@@ -106,7 +111,8 @@ int main (void)
 
     printf("\n");
   }
-
+  
+  table[0]=playball(0,play);
   return 0;
 
 }
