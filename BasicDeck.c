@@ -37,8 +37,26 @@ int playball (int player, int p[4][7])
 	}
 	printf("\n Noble champion, what card do you wish to play?");
 	scanf("%d",&chosen);
-	return p[player][chosen];
+	return p[player][chosen-1];
 	
+}
+/*
+	This function takes array table[4] from funtion main and presents it to the judge.
+	the judge can indicate selection, and in the final game this will increase that players points.
+	this is why handles would be useful, so the judge can keep the players straight.
+	will need to modify so that cards will display.
+*/
+int judgement(int tableau[4])
+{
+	int i;
+	int winner;
+	printf("Judge, which card wins this competition?\n");
+	for(i=0;i<4;++i)
+	{
+		printf("%d. %d\n",i+1,tableau[i]);
+	}
+	scanf("%d",&winner);
+	return winner;
 }
 
 
@@ -112,7 +130,13 @@ int main (void)
     printf("\n");
   }
   
-  table[0]=playball(0,play);
+  for (i=0;i<4;++i)
+  {
+  table[i]=playball(i,play);
+  }
+  
+  
+  judgement(table);
   return 0;
 
 }
