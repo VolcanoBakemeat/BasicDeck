@@ -18,7 +18,7 @@ struct card
 */
 int drawcard(void)		//why does this need to be its own function
 {
-    return rand()/1000 % 52; 	//Chooses only in the range of 0-51. with this in a centralized place, I can change it on the fly
+    return rand()/1000 % 18; 	//Chooses only in the range of 0-51. with this in a centralized place, I can change it on the fly
 }
 /*
 	This function (right now hardcoded so it only works with playnum =4) displays hands for each player and allows player to select card to put into table array
@@ -56,7 +56,7 @@ int judgement(int tableau[4])
 		printf("%d. %d\n",i+1,tableau[i]);
 	}
 	scanf("%d",&winner);
-	return winner;
+	return tableau[winner];		//returns the card, not the player number
 }
 
 
@@ -70,6 +70,7 @@ int main (void)
   int x=0; 	//player
   int y=0;	//hand positions
 
+  char winner[MAXLEN];
   short unsigned int handnum;
   srand(time(NULL));	//initializes rand
  
@@ -107,8 +108,28 @@ int main (void)
 	deckmaster [i].taken = 0;
   }
   
-  
+  strcpy(deckmaster[0].name,"Harry Potter");
+  strcpy(deckmaster[1].name,"Hermione Granger");
+  strcpy(deckmaster[2].name,"Ron Weasley");
+  strcpy(deckmaster[3].name,"Neville Longbottom");
+  strcpy(deckmaster[4].name,"Dumbledore");
+  strcpy(deckmaster[5].name,"Snape");
+  strcpy(deckmaster[6].name,"Voldemort");
+  strcpy(deckmaster[7].name,"Sirus Black");
+  strcpy(deckmaster[8].name,"Remus Lupin");
+  strcpy(deckmaster[9].name,"Draco Malfoy");
+  strcpy(deckmaster[10].name,"Dudley Dursley");
 
+  
+  strcpy(deckmaster[11].name,"DanIsNotOnFire");
+  strcpy(deckmaster[12].name,"AmazingPhil");
+  strcpy(deckmaster[13].name,"Dil Howelter");
+  strcpy(deckmaster[14].name,"Susan2");
+ 
+  strcpy(deckmaster[15].name,"Percy Jackson");
+  strcpy(deckmaster[16].name,"Sally Jackson");
+  strcpy(deckmaster[17].name,"Annabeth Chase");
+  strcpy(deckmaster[18].name,"Rachel Elizabeth Dare");
 /*	printf("Our noble combatants:\n");		//For some reason this cuts off the first letter of the name.
 	for(i=0; i<handnum; ++i)
 	{
@@ -136,7 +157,8 @@ int main (void)
   }
   
   
-  judgement(table);
+  strcpy(winner, deckmaster[judgement(table)].name);	//doozy of a line.
+  printf("Winning card is %s\n",winner);
   return 0;
 
 }
