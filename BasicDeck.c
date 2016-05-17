@@ -30,11 +30,11 @@ int playball (int player, int p[4][7])
 	int l;
 	int chosen;
 
-	printf("Player %d cards: ",player+1);
-	for (l=1; l<=7; ++l)
-	{
-		printf("|%d. %d ",l, p[player][l-1]);
-	}
+//	printf("Player %d cards: ",player+1);
+//	for (l=1; l<=7; ++l)
+//	{
+//		printf("|%d. %d ",l, p[player][l-1]);
+//	}
 	printf("\n Noble champion, what card do you wish to play?");
 	scanf("%d",&chosen);
 	return p[player][chosen-1];
@@ -142,10 +142,10 @@ int main (void)
    for(y=0; y<7; ++y)
    {
    	play[curplay][y]= drawcard();
-   	printf("id %d %s ",play[curplay][y], deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
+   	printf("%d id %d %s ",y+1, play[curplay][y], deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
    }
-
     printf("\n");
+    playball(curplay, play);
   }
   
   for (i=0;i<4;++i)
