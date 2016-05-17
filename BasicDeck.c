@@ -16,7 +16,7 @@ struct card
 /*
 	randomly chooses card.
 */
-int drawcard(void)		//why does this need to be its own function
+int drawcard(void)
 {
     return rand()/1000 % 18; 	//Chooses only in the range of 0-51. with this in a centralized place, I can change it on the fly
 }
@@ -71,6 +71,7 @@ int main (void)
   int y=0;	//hand positions
 
   char winner[MAXLEN];
+  short unsigned int curplay=0;
   short unsigned int handnum;
   srand(time(NULL));	//initializes rand
  
@@ -138,14 +139,15 @@ int main (void)
 */
 
 	//fills player hands.
-  for(x=0; x<handnum; ++x)     //Now fills array play instead of simply printing.
+	//I'm trying to rewite this so it does the actual gameplay
+  for(curplay=0; curplay<handnum; ++curplay)     //Now fills array play instead of simply printing.
 
   {
-	printf("Player %d:\n",x+1);
+	printf("Player %d:\n",curplay+1);
    for(y=0; y<7; ++y)
    {
-   	play[x][y]= drawcard();
-   	printf("%d ",deckmaster[play[x][y]].id);	//After I make cards, I'll have this print the name.
+   	play[curplay][y]= drawcard();
+   	printf("%s ",deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
    }
 
     printf("\n");
