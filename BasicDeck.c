@@ -3,7 +3,7 @@
 #include <stdlib.h>//rand
 #include <time.h>  //time based seeds
 #define MAXLEN 80
-
+#define LINEGAP 5
 //Here's an idea, put player handles in a seperate array. Location in handle array correspond to hands in play array. This works like a dreamfairy
 //Also, make player number changeable. Scrapped for now.
 struct card
@@ -51,14 +51,9 @@ int judgement(int tableau[4])
 	int i;
 	int winner;
 	printf("Judge, which card wins this competition?\n");
-	for(i=0;i<4;++i)
-	{
-		printf("%d. %d\n",i+1,tableau[i]);
-	}
 	scanf("%d",&winner);
 	return tableau[winner];		//returns the card, not the player number
 }
-
 
 int main (void)
 {
@@ -147,7 +142,7 @@ int main (void)
    for(y=0; y<7; ++y)
    {
    	play[curplay][y]= drawcard();
-   	printf("%s ",deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
+   	printf("id %d %s ",play[curplay][y], deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
    }
 
     printf("\n");
@@ -158,7 +153,11 @@ int main (void)
   table[i]=playball(i,play);
   }
   
-  
+  printf("Judge, choose from among these!\n");
+  for (i=0;i<=handnum;++i)
+  {
+  	printf("%d. %s\n",i, deckmaster[table[i]].name);
+  }
   strcpy(winner, deckmaster[judgement(table)].name);	//doozy of a line.
   printf("Winning card is %s\n",winner);
   return 0;
