@@ -30,11 +30,6 @@ int playball (int player, int p[4][7])
 	int l;
 	int chosen;
 
-//	printf("Player %d cards: ",player+1);
-//	for (l=1; l<=7; ++l)
-//	{
-//		printf("|%d. %d ",l, p[player][l-1]);
-//	}
 	printf("\n Noble champion, what card do you wish to play?");
 	scanf("%d",&chosen);
 	return p[player][chosen-1];
@@ -133,28 +128,38 @@ int main (void)
 	}
 */
 
-	//fills player hands.
+	//fills player hands. May spin into own function.
+	for(x=0;x<handnum;++x)
+	{
+		for(y=0;y<7;++y)
+		{
+			play[x][y]=drawcard();
+		}
+	}
+	
 	//I'm trying to rewite this so it does the actual gameplay
-  for(curplay=0; curplay<handnum; ++curplay)     //Now fills array play instead of simply printing.
-
+	//Right now, this manages both hand drawing and actual game play. These need to be separated!
+  printf("Players, %s needs a companion this round!\n",deckmaster[drawcard()].name);
+  
+  for(curplay=0; curplay<4; ++curplay)     //Now prints, does not fill
   {
 	printf("Player %d:\n",curplay+1);
-   for(y=0; y<7; ++y)
-   {
-   	play[curplay][y]= drawcard();
-   	printf("%d id %d %s ",y+1, play[curplay][y], deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
-   }
+   	for(y=0; y<7; ++y)
+  	{
+  	 	printf("%d %s ",y+1, deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
+   
+   	}
     printf("\n");
-    playball(curplay, play);
+    table[curplay] = playball(curplay, play);
   }
   
-  for (i=0;i<4;++i)
-  {
-  table[i]=playball(i,play);
-  }
+ // for (i=0;i<4;++i)
+ // {
+//  table[i]=playball(i,play);
+ // }
   
   printf("Judge, choose from among these!\n");
-  for (i=0;i<=handnum;++i)
+  for (i=0;i<handnum;++i)
   {
   	printf("%d. %s\n",i, deckmaster[table[i]].name);
   }
