@@ -59,16 +59,23 @@ int main (void)
   
   int x=0; 	//player
   int y=0;	//hand positions
+  int r=0; // round counter
 
   char winner[MAXLEN];
   short unsigned int curplay=0;
   short unsigned int handnum;
+  short unsigned int rounds;
   srand(time(NULL));	//initializes rand
  
  // printf("How many players?\n"); 
  // scanf("%d",&handnum);
 //  getchar();
- 
+  do
+  {
+ 	 printf("How many rounds do you wish to play?");
+  	 scanf("%d",&rounds);
+  }while (rounds>10 || rounds <1);
+  
   handnum = 4;		//Every game automatically 4 players for now.
   int table[handnum]; //cards played on table
   int play[handnum][7];	//cards in play
@@ -136,9 +143,11 @@ int main (void)
 			play[x][y]=drawcard();
 		}
 	}
+
+ for(r=0; r<rounds; ++r)
+ {
 	
 	//I'm trying to rewite this so it does the actual gameplay
-	//Right now, this manages both hand drawing and actual game play. These need to be separated!
   printf("Players, %s needs a companion this round!\n",deckmaster[drawcard()].name);
   
   for(curplay=0; curplay<4; ++curplay)     //Now prints, does not fill
@@ -165,6 +174,8 @@ int main (void)
   }
   strcpy(winner, deckmaster[judgement(table)].name);	//doozy of a line.
   printf("Winning card is %s\n",winner);
+  
+}
   return 0;
 
 }
