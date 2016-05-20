@@ -46,7 +46,10 @@ int judgement(int tableau[4])
 	int i;
 	int winner;
 	printf("Judge, which card wins this competition?\n");
+	do
+	{
 	scanf("%d",&winner);
+	}while(winner<0 || winner > 3);
 	return tableau[winner];		//returns the card, not the player number
 }
 
@@ -64,12 +67,13 @@ int main (void)
   char winner[MAXLEN];
   short unsigned int curplay=0;
   short unsigned int handnum;
-  short unsigned int rounds;
+  short unsigned int rounds = 0;
   srand(time(NULL));	//initializes rand
  
  // printf("How many players?\n"); 
  // scanf("%d",&handnum);
 //  getchar();
+
   do
   {
  	 printf("How many rounds do you wish to play?");
