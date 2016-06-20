@@ -14,6 +14,7 @@ struct card
 	int taken;
 	int played;
 };
+
 /*
 	randomly chooses card.
 */
@@ -64,7 +65,9 @@ int main (void)
   int x=0; 	//player
   int y=0;	//hand positions
   int r=0; // round counter
-
+  int currcard;
+  int goon;
+  
   char winner[MAXLEN];
   short unsigned int curplay=0;
   short unsigned int handnum;
@@ -160,7 +163,21 @@ int main (void)
 	{
 		for(y=0;y<7;++y)
 		{
-			play[x][y]=drawcard();
+			do			//This loop insures that repeats are not generated when player hands are filled
+			{
+				currcard= drawcard();
+				if(deckmaster[currcard].taken==0)
+				{
+					play[x][y]=currcard;
+					deckmaster[currcard].taken=1;
+					goon=1;
+				}
+				else
+				{
+					goon =0;
+				}
+			}while(goon==0);
+			
 		}
 	}
 
@@ -186,7 +203,7 @@ int main (void)
 	printf("Player %d:\n",curplay+1);
    	for(y=0; y<7; ++y)
   	{
-  	 	printf("%d %s ",y+1, deckmaster[play[curplay][y]].name);	//After I make cards, I'll have this print the name.
+  	 	printf("%d %s ",y+1, deckmaster[play[curplay][y]].name);	//prints the name.
    
    	}
     printf("\n");
