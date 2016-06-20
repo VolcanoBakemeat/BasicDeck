@@ -12,13 +12,14 @@ struct card
 	char description[MAXLEN];
 	int id;			//Numerical id. 
 	int taken;
+	int played;
 };
 /*
 	randomly chooses card.
 */
 int drawcard(void)
 {
-    return rand()/1000 % 18; 	//Chooses only in the range of 0-51. with this in a centralized place, I can change it on the fly
+    return rand()/1000 % 31; 	//Chooses only in the range of 0-24. with this in a centralized place, I can change it on the fly
 }
 /*
 	This function (right now hardcoded so it only works with playnum =4) displays hands for each player and allows player to select card to put into table array
@@ -106,8 +107,9 @@ int main (void)
 
   {
 
-    deckmaster [i].id = i+1;
-	deckmaster [i].taken = 0;
+    deckmaster[i].id = i+1;
+	deckmaster[i].taken = 0;
+	deckmaster[i].played = 0;
   }
   
   strcpy(deckmaster[0].name,"Harry Potter");
@@ -132,6 +134,20 @@ int main (void)
   strcpy(deckmaster[16].name,"Sally Jackson");
   strcpy(deckmaster[17].name,"Annabeth Chase");
   strcpy(deckmaster[18].name,"Rachel Elizabeth Dare");
+  
+  strcpy(deckmaster[19].name,"Edward Elric");
+  strcpy(deckmaster[20].name,"Winry Rockbell");
+  strcpy(deckmaster[21].name,"Alphonse Elric");
+  strcpy(deckmaster[22].name,"Izumi Curtis");
+  strcpy(deckmaster[23].name,"Riza Hawkeye");
+  strcpy(deckmaster[24].name,"Roy Mustang");
+  strcpy(deckmaster[25].name,"Pinako Rockbell");
+  strcpy(deckmaster[26].name,"Scar");
+ 
+  strcpy(deckmaster[27].name,"Armin");
+  strcpy(deckmaster[29].name,"Eren Jaeger");
+  strcpy(deckmaster[30].name,"Mikasa Ackerman");
+  strcpy(deckmaster[31].name,"Levi Ackerman");
 /*	printf("Our noble combatants:\n");		//For some reason this cuts off the first letter of the name.
 	for(i=0; i<handnum; ++i)
 	{
@@ -150,9 +166,20 @@ int main (void)
 
  for(r=0; r<rounds; ++r)
  {
-	
-	//I'm trying to rewite this so it does the actual gameplay
-  printf("Players, %s needs a companion this round!\n",deckmaster[drawcard()].name);
+  do		//prevents a repeat card from being judged.
+  {	
+  	i=drawcard();
+  	if(deckmaster[i].taken==1)
+  	{
+  		x=0;
+  	}
+  	else
+  	{
+  		x=1;
+  		deckmaster[i].taken =1;
+	}
+  }while(x==1);
+  printf("Players, %s needs a companion this round!\n",deckmaster[i].name);
   
   for(curplay=0; curplay<4; ++curplay)     //Now prints, does not fill
   {
