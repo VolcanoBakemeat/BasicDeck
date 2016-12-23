@@ -4,6 +4,7 @@
 #include <time.h>  //time based seeds
 #define MAXLEN 80
 #define LINEGAP 5
+#define SIZEDECK 52
 //Here's an idea, put player handles in a seperate array. Location in handle array correspond to hands in play array. This works like a dreamfairy
 //Also, make player number changeable. Scrapped for now.
 struct card
@@ -15,12 +16,28 @@ struct card
 	int played;
 };
 
+
+
 /*
 	randomly chooses card.
 */
 int drawcard(void)
 {
-    return rand()/1000 % 31; 	//Chooses only in the range of 0-24. with this in a centralized place, I can change it on the fly
+	int m;
+	m = rand()/1000 % 31; 	//Chooses only in the range of 0-however many. with this in a centralized place, I can change it on the fly
+	return m;
+}
+
+int verify(int took)
+{
+	if (took==0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 /*
 	This function (right now hardcoded so it only works with playnum =4) displays hands for each player and allows player to select card to put into table array
@@ -84,9 +101,13 @@ int main (void)
   	 scanf("%d",&rounds);
   }while (rounds>10 || rounds <1);
   
+  printf("roundcount accepted.\n");		//troubleshooting. delete later
+  
   handnum = 4;		//Every game automatically 4 players for now.
   int table[handnum]; //cards played on table
   int play[handnum][7];	//cards in play
+  
+  printf("Table initialized.\n");
  
  // char handles[handnum][MAXLEN];	Abandoning handles to work on something more productive
   
@@ -106,7 +127,7 @@ int main (void)
 
 
 
-  for(i=0;i<52;++i)     //generates deck. The reason for even having a deck is because it won't always be just numbers. It won't always be 52 cards either
+  for(i=0;i<=31;++i)     //generates deck. The reason for even having a deck is because it won't always be just numbers. It won't always be 52 cards either
 
   {
 
@@ -114,6 +135,8 @@ int main (void)
 	deckmaster[i].taken = 0;
 	deckmaster[i].played = 0;
   }
+  
+  printf("deck framework initialized.\n");
   
   strcpy(deckmaster[0].name,"Harry Potter");
   strcpy(deckmaster[1].name,"Hermione Granger");
@@ -151,6 +174,8 @@ int main (void)
   strcpy(deckmaster[29].name,"Eren Jaeger");
   strcpy(deckmaster[30].name,"Mikasa Ackerman");
   strcpy(deckmaster[31].name,"Levi Ackerman");
+  
+  printf("Deck identities initialized.\n");
 /*	printf("Our noble combatants:\n");		//For some reason this cuts off the first letter of the name.
 	for(i=0; i<handnum; ++i)
 	{
@@ -161,25 +186,25 @@ int main (void)
 	//fills player hands. May spin into own function.
 	for(x=0;x<handnum;++x)
 	{
+		printf("Begin hand %d\n",x);
 		for(y=0;y<7;++y)
 		{
-			do			//This loop insures that repeats are not generated when player hands are filled
-			{
-				currcard= drawcard();
-				if(deckmaster[currcard].taken==0)
-				{
+			printf("Begin card %d\n",y);
+					do
+					{
+						currcard=drawcard();
+					}while(deckmaster[currcard].taken==1);
+					
+					printf("step1\n");
 					play[x][y]=currcard;
+					printf("step2\n");
 					deckmaster[currcard].taken=1;
+					printf("step3\n");
 					goon=1;
-				}
-				else
-				{
-					goon =0;
-				}
-			}while(goon==0);
-			
-		}
+		}				
 	}
+	
+	printf("hands generated");
 
  for(r=0; r<rounds; ++r)
  {
