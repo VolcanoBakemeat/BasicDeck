@@ -69,7 +69,7 @@ int judgement(int tableau[4])
 	{
 	scanf("%d",&winner);
 	}while(winner<0 || winner > 3);
-	return tableau[winner];		//returns the card, not the player number
+	return winner;		//returns the player number. Why did I ever do it any other way?
 }
 
 int main (void)
@@ -85,7 +85,8 @@ int main (void)
   int currcard;
   int goon;
   
-  char winner[MAXLEN];
+  //char winner[MAXLEN];
+  short unsigned int winner;
   short unsigned int curplay=0;
   short unsigned int handnum;
   short unsigned int rounds = 0;
@@ -101,11 +102,17 @@ int main (void)
   	 scanf("%d",&rounds);
   }while (rounds>10 || rounds <1);
   
-  printf("roundcount accepted.\n");		//troubleshooting. delete later
+
   
   handnum = 4;		//Every game automatically 4 players for now.
   int table[handnum]; //cards played on table
   int play[handnum][7];	//cards in play
+  short int points[handnum];
+  int alleyoop;
+  for(alleyoop=0;alleyoop<=handnum;++alleyoop)
+  {
+  	points[alleyoop]=0;
+  }
   
   printf("Table initialized.\n");
  
@@ -136,7 +143,7 @@ int main (void)
 	deckmaster[i].played = 0;
   }
   
-  printf("deck framework initialized.\n");
+
   
   strcpy(deckmaster[0].name,"Harry Potter");
   strcpy(deckmaster[1].name,"Hermione Granger");
@@ -154,7 +161,7 @@ int main (void)
   strcpy(deckmaster[11].name,"DanIsNotOnFire");
   strcpy(deckmaster[12].name,"AmazingPhil");
   strcpy(deckmaster[13].name,"Dil Howelter");
-  strcpy(deckmaster[14].name,"Susan2");
+  strcpy(deckmaster[14].name,"Tabitha Casper");
  
   strcpy(deckmaster[15].name,"Percy Jackson");
   strcpy(deckmaster[16].name,"Sally Jackson");
@@ -174,8 +181,21 @@ int main (void)
   strcpy(deckmaster[29].name,"Eren Jaeger");
   strcpy(deckmaster[30].name,"Mikasa Ackerman");
   strcpy(deckmaster[31].name,"Levi Ackerman");
+  strcpy(deckmaster[32].name,"Hange Zoe");
+  strcpy(deckmaster[33].name,"The Colossal Titan");
   
-  printf("Deck identities initialized.\n");
+  strcpy(deckmaster[34].name,"Luke Skywalker");
+  strcpy(deckmaster[35].name,"Princess Leia");
+  strcpy(deckmaster[36].name,"Han Solo");
+  strcpy(deckmaster[37].name,"Obi Wan Kenobi");
+  strcpy(deckmaster[38].name,"Kylo Ren");
+  strcpy(deckmaster[39].name,"Darth Vader");
+  strcpy(deckmaster[40].name,"Young Anakin Skywalker");
+  strcpy(deckmaster[41].name,"Rey");
+  strcpy(deckmaster[42].name,"Padme");
+  
+  strcpy(deckmaster[35].name,"Gerard Way");
+  
 /*	printf("Our noble combatants:\n");		//For some reason this cuts off the first letter of the name.
 	for(i=0; i<handnum; ++i)
 	{
@@ -186,25 +206,21 @@ int main (void)
 	//fills player hands. May spin into own function.
 	for(x=0;x<handnum;++x)
 	{
-		printf("Begin hand %d\n",x);
+//		printf("Begin hand %d\n",x);
 		for(y=0;y<7;++y)
 		{
-			printf("Begin card %d\n",y);
 					do
 					{
 						currcard=drawcard();
 					}while(deckmaster[currcard].taken==1);
 					
-					printf("step1\n");
 					play[x][y]=currcard;
-					printf("step2\n");
 					deckmaster[currcard].taken=1;
-					printf("step3\n");
 					goon=1;
 		}				
 	}
 	
-	printf("hands generated");
+//	printf("hands generated");
 
  for(r=0; r<rounds; ++r)
  {
@@ -225,7 +241,7 @@ int main (void)
   
   for(curplay=0; curplay<4; ++curplay)     //Now prints, does not fill
   {
-	printf("Player %d:\n",curplay+1);
+	printf("Player %d (%i):\n",curplay+1,points[curplay]);
    	for(y=0; y<7; ++y)
   	{
   	 	printf("%d %s ",y+1, deckmaster[play[curplay][y]].name);	//prints the name.
@@ -245,8 +261,11 @@ int main (void)
   {
   	printf("%d. %s\n",i, deckmaster[table[i]].name);
   }
-  strcpy(winner, deckmaster[judgement(table)].name);	//doozy of a line.
-  printf("Winning card is %s\n",winner);
+  winner = judgement(table);
+  //strcpy(winner, deckmaster[judgement(table)].name);	//doozy of a line.
+  ++points[winner];
+  printf("Winning card is %s\n",deckmaster[winner].name);
+  
   
 }
   return 0;
